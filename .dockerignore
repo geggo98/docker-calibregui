@@ -1,0 +1,7 @@
+.git
+.gitignore
+README.md
+*.sublime-workspace
+*.sublime-project
+*sftp-config.json
+example

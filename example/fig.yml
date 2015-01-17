@@ -1,0 +1,28 @@
+# Starts a Calibre service inside a container.
+#
+# I let a containerized Calibre fetch regularly some 
+# newspapers and forward them via mail to my Kindle.
+#
+# I can access the Calibe library directly on port 8081.
+# For maintenance purposes I can access the Calibe GUI
+# via ssh+vnc:
+# 1. Start ssh with port worwarding
+#     ssh -N -p 22023 -L 5950:calibregui:5900 vpn@docker-server
+# 2. Start Chicken VNC on localhost, display 50 / port 5950
+
+calibregui:
+  build: geggo98/calibregui  
+  volumes:
+    - /home/containers/calibre-newspaper/library:/home/calibre/Calibre Library
+    - /home/containers/calibre-newspaper/config:/home/calibre/.config/calibre
+  ports:
+    - "8081:8080"
+ssh-vpn:
+  image: geggo98/ssh-vpn-jump-host
+  links: calibregui
+  volumes:
+  	- /home/containers/calibre-newspaper/ssh-vpn:/ssh
+  	# You must edit authorized_keys_vpn in this volume and
+  	# add your ssh public key.
+  ports:
+    - "22023:22022"
