@@ -23,10 +23,8 @@ RUN curl --silent --show-error  https://raw.githubusercontent.com/kovidgoyal/cal
 ENV X11_USER calibre
 
 EXPOSE 8080
-VOLUME "/home/calibre/Calibre Library"
-VOLUME "/home/calibre/.config/calibre"
-
-WORKDIR /home/${X11_USER}
+VOLUME "/home/${X11_USER}/Calibre Library"
+VOLUME "/home/${X11_USER}/.config/calibre"
 
 # Start lxde with Calibe GUI.
 # When starting Calibre for the first time, you should
