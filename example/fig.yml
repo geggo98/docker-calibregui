@@ -9,20 +9,22 @@
 # 1. Start ssh with port worwarding
 #     ssh -N -p 22023 -L 5950:calibregui:5900 vpn@docker-server
 # 2. Start Chicken VNC on localhost, display 50 / port 5950
+#
+# You must edit "authorized_keys_vpn" in the volume ssh-vpn to
+# allow users to connect
 
 calibregui:
-  build: geggo98/calibregui  
+  image: geggo98/calibregui  
   volumes:
     - /home/containers/calibre-newspaper/library:/home/calibre/Calibre Library
     - /home/containers/calibre-newspaper/config:/home/calibre/.config/calibre
   ports:
     - "8081:8080"
-ssh-vpn:
+sshvpn:
   image: geggo98/ssh-vpn-jump-host
-  links: calibregui
+  links: 
+    - calibregui
   volumes:
-  	- /home/containers/calibre-newspaper/ssh-vpn:/ssh
-  	# You must edit authorized_keys_vpn in this volume and
-  	# add your ssh public key.
+    - /home/containers/calibre-newspaper/ssh-vpn:/ssh
   ports:
     - "22023:22022"
