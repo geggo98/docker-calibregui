@@ -11,11 +11,11 @@ MAINTAINER Stefan Schwetschke "stefan@schwetschke.de"
 
 # Installing depdencies
 RUN apt-get update -y && \
-	apt-get install -y curl wget xdg-utils python && \
+	apt-get install -y curl wget xdg-utils python xz-utils && \
 	apt-get clean
 
 # Installing calibre. This can take 5 minutes...
-ENV REFRESHED_CALIBRE_AT 2015-01-18
+ENV REFRESHED_CALIBRE_AT 2016-02-20
 RUN curl --silent --show-error  https://raw.githubusercontent.com/kovidgoyal/calibre/master/setup/linux-installer.py \
 	| sudo python -c "import sys; main=lambda:sys.stderr.write('Download failed\n'); exec(sys.stdin.read()); main()" \
 	2| grep -v -e '^Downloaded'
